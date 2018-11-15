@@ -1,0 +1,108 @@
+<% include ../partials/header.ejs %>
+<div class="container">
+  <div class="row">
+    <div class="col-md-3">
+      <p class="lead font-weight-normal">YelpCamp</p>
+      <div id="map"></div>
+    </div>
+    <div class="col-md-9">
+      <div class="card" style="margin-top:1.5vh">
+        <img class="card-img-top" src="<%= camp.image %>" alt="Card image cap">
+        <div class="card-body">
+          <div class="card-title">
+            <h5>
+              <%= camp.name%>
+              <span style="float: right;">Rs.<%=camp.price%>/night</span>
+            </h5>
+            <% if(camp.rating === 0){ %>
+              <p><em>No reviews yet</em></p>
+            <% } else{%>
+              <p style="margin-bottom:0">
+                  <span class="fa fa-star checked"></span>
+                  <span class="fa fa-star <% if (camp.rating > 1.5) { %> checked <% } %>"></span>
+                  <span class="fa fa-star <% if (camp.rating > 2.5) { %> checked <% } %>"></span>
+                  <span class="fa fa-star <% if (camp.rating > 3.5) { %> checked <% } %>"></span>
+                  <span class="fa fa-star <% if (camp.rating > 4.5) { %> checked <% } %>"></span>
+              </p>
+              <em>
+                Current campground rating: <strong><%= camp.rating.toFixed(2) %></strong>
+               </em>
+             <% } %>
+          </div>
+          <p class="card-text"><%= camp.description %></p>
+          <% if(currentUser && currentUser.username != "admin") {%>
+              <form action="/campground/<%= camp._id %>/user/<%= currentUser.id %>" method="POST" >
+                <button class="btn btn-success btn-md" style="color:white">Add To visit List</button>
+               </form>    
+          <% } %>
+          <% if(currentUser && currentUser.username == "admin"){%>
+          <a href="/campground/<%=camp._id%>/edit" class="btn btn-warning btn-sm" style="color:white;">Edit</a>
+          <form action="/campground/<%= camp._id %>?_method=DELETE" method="POST" style="display:inline">
+            <button class="btn btn-danger btn-sm" style="color:white">Delete</button> 
+          </form>    
+          <% } %>
+         </div>
+      </div>
+      <p></p>
+      <div class="card card-body bg-light" >
+      	
+      		<span style="float:right;">
+      			<a href="/campground/<%= camp._id %>/comment/new" class="btn btn-outline-success btn-sm float-right" style="width:10rem; ">Add New Review</a>
+      		</span>
+	         <hr>
+	          <% camp.comments.forEach(function(comment){ %>
+	            <div class="row" style="padding-bottom:1em">
+	              <div class="col-md-12">
+	                <b style="padding-right:2.5px"><%=comment.author.name%></b>
+                  <%- '<span class="fa fa-star checked"></span>'.repeat(comment.review) %><%- '<span class="fa fa-star"></span>'.repeat(5 - comment.review) %>
+	                <span style="float: right;"><%= moment(comment.createdAt).fromNow() %></span>
+                  
+	                <div style="padding-top:3px;"><%= comment.content %>
+                    <% if(currentUser && comment.author.id.equals(currentUser._id)){%>
+                      <div style="float:right;">
+                        <a class="btn btn-warning btn-sm" href="/campground/<%=camp._id%>/comment/<%=comment._id%>/edit" style="color:white; padding: .01rem .5rem;">Edit</a>
+                        <form action="/campground/<%=camp._id%>/comment/<%=comment._id%>?_method=DELETE" method="POST" style="display:inline;">
+                          <button class="btn btn-danger btn-sm" style="color:white; padding: .01rem .5rem;">Delete</button>
+                        </form>
+                      </div>
+                    <% } %>
+                  </div> 
+	              </div>
+	            </div>
+	          <% })%>
+      	
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function initMap() {
+    var lat = <%= camp.lat %>;
+    var lng = <%= camp.lng %>;
+    var center = {lat: lat, lng: lng };
+    var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 8,
+        center: center,
+        scrollwheel: false
+    });
+    var contentString = `
+      <strong><%= camp.name %><br />
+      <%= camp.location %></strong>
+      <p><%= camp.description %></p>
+    `
+    var infowindow = new google.maps.InfoWindow({
+      content: contentString
+    });
+    var marker = new google.maps.Marker({
+        position: center,
+        map: map
+    });
+    marker.addListener('click', function() {
+      infowindow.open(map, marker);
+    });
+  }
+</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCPFbxCzzYFLC8_jWPMmllkT-Kc3XKW37Y&callback=initMap"></script>
+
+<% include ../partials/footer.ejs %>

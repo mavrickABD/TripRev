@@ -1,0 +1,15 @@
+.checked{
+	color: orange;
+}
+
+#map{
+	height: 400px;
+	width: 100%;
+}
+
+.lb{
+	display: inline-block;
+	float: left;
+	font-weight: 600;
+    margin: 0;
+}

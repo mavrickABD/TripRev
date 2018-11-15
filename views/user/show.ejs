@@ -1,0 +1,36 @@
+<% include ../partials/header %>
+
+<div class="row container">
+    <div class="col-md-4">
+        <div class="card " style="width: 12rem; height: 20rem">
+            <img class="card-img-top" src="<%= user.avatar %>" alt="/assests/default_avatar.png">
+            <div class="card-body">
+              <h5 class="card-title"><%= user.firstName %> <%= user.lastName%></h5>
+              <div class="card-text">username:<i> <%=user.username%> </i></div>
+            </div>
+          </div>
+    </div>
+    <div class="col-md-8">
+        <div class="card card-body bg-light" >
+            <h3 style="text-align: center; padding-bottom: 1vh">To Visit List</h3>
+            <% if(user.campgrounds.length==0){%>
+                <h5 style="text-align:center; font-weight:normal;"><i>No to visit campgrounds yet.</i></h5>
+            <% } else{ %>
+                <% user.campgrounds.forEach(function(camp){ %>
+                    <div class="row container">
+                        <div class="col-sm-12">
+                                <div>
+                                    <img  class="img-thumbnail " style="width: 3rem; height: 3rem ; padding: 0;" src="<%= camp.image %>"  >
+                                    <a style="font-size: x-large; margin-left: 1em" href="/campground/<%= camp._id %>"><i><%= camp.name %></i></a> 
+                                    <span style="float: right; font-weight: 30; font-size: medium; padding-top: .5rem;">Rs.<%= camp.price%>/Night</span>   
+                                </div>
+                                <hr>
+                        </div>
+                    </div>
+                <% }) %> 
+            <% } %>    
+        </div>
+    </div>
+</div>
+
+<% include ../partials/footer %>
