@@ -1,3 +1,6 @@
+body{
+	background-color: rgb(4, 17, 21);
+}
 .checked{
 	color: orange;
 }
@@ -12,4 +15,8 @@
 	float: left;
 	font-weight: 600;
     margin: 0;
+}
+
+.white-text{
+	color: white;
 }

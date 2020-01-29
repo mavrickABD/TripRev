@@ -76,9 +76,12 @@ middleObj.isAddeedInList = function(req,res,next){
 				return camp._id.equals(req.params.id)
 			})
 			if(foundCampground){
-				req.flash("success","Already added in To visit list.")
-				res.redirect("/campground/"+req.params.id)
+				req.flash("success","Already added in to visit list.")
+				 res.redirect("/campground/"+req.params.id)
+			}else{
+				next();
 			}
+		
 		}
 	})
 }

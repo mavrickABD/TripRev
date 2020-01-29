@@ -17,6 +17,7 @@ router.get("/user/:id",middle.isLoggedIn,function(req,res){
 })
 
 router.post("/campground/:id/user/:user_id",middle.isLoggedIn,middle.isAddeedInList,function(req,res){
+    
     User.findById(req.params.user_id,function(err,user){
         if(err){
             res.redirect("/campground/"+req.params.id)
@@ -33,6 +34,29 @@ router.post("/campground/:id/user/:user_id",middle.isLoggedIn,middle.isAddeedInL
                 }
             })
         }
+    })
+})
+
+router.get("/user/:id/edit",middle.isLoggedIn,function(req,res){
+    User.findById(req.params.id,function(err,user){
+        if(err){
+            req.flash("error","sorry can't process your request")
+            res.redirect("/user"+req.params.id)
+        }else{
+            res.render("user/edit",{user:user})
+        }
+    })
+})
+
+router.put("/user/:id",middle.isLoggedIn,function(req,res){
+    User.findByIdAndUpdate(req.params.id,req.body.user,function(err,user){
+      if(err){
+          req.flash("error","could not update please try again")
+          res.redirect("/user/"+req.params.id)
+        }else{
+            req.flash("success","seccessfully updated your information")
+            res.redirect("/user/"+req.params.id)
+        } 
     })
 })
 

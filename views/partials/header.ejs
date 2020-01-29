@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>YelpCamp</title>
+	<title>TripRev</title>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 	<link rel="stylesheet" href="/stylesheets/custom.css">
@@ -11,18 +11,32 @@
 	li a{
 		font-weight: 500;
 	}
-	
+	.bg-light {
+    background-color: #464b5054!important;
+	}
+
+.alert-danger {
+	color: #5a171d;
+	background-color: #c73b48;
+	border-color: #b32534;
+	}
+
+	.alert-success {
+    color: #044212;
+    background-color: #389c50;
+    border-color: #22582f;
+	}
 	</style>
 
 </head>
 
 <body>
 
-	<nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top" style="margin-bottom: 20px ; box-shadow: .5px .2px #545b62a6;">
+	<nav class="navbar navbar-expand-lg navbar-dark bg-light sticky-top" style="margin-bottom: 20px ; box-shadow: .5px .2px #545b62a6;">
 
-	  <a class="navbar-brand" href="/campground">YelpCamp</a>
+	  <a class="navbar-brand" href="/campground">TripRev</a>
 	    <%  if(currentUser && currentUser.username=="admin"){ %>
-	  		<a href="/campground/new">Add new Campgrounds <i class="fas fa-plus"></i></a>
+	  		<a href="/campground/new">Add new Hotels <i class="fas fa-plus"></i></a>
 	  	<%}%>
 	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 	    <span class="navbar-toggler-icon"></span>

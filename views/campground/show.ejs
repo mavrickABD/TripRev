@@ -1,12 +1,15 @@
 <% include ../partials/header.ejs %>
+
+
+
 <div class="container">
   <div class="row">
     <div class="col-md-3">
-      <p class="lead font-weight-normal">YelpCamp</p>
+    <h3 class="lead font-weight-normal font-size-large" style="color:white;margin-bottom:20px ">TripRev</h3>
       <div id="map"></div>
     </div>
     <div class="col-md-9">
-      <div class="card" style="margin-top:1.5vh">
+      <div class="card" style="margin-top:1.5vh;">
         <img class="card-img-top" src="<%= camp.image %>" alt="Card image cap">
         <div class="card-body">
           <div class="card-title">
@@ -29,7 +32,7 @@
                </em>
              <% } %>
           </div>
-          <p class="card-text"><%= camp.description %></p>
+          <p class="card-text"><%- camp.description %></p>
           <% if(currentUser && currentUser.username != "admin") {%>
               <form action="/campground/<%= camp._id %>/user/<%= currentUser.id %>" method="POST" >
                 <button class="btn btn-success btn-md" style="color:white">Add To visit List</button>
@@ -44,25 +47,26 @@
          </div>
       </div>
       <p></p>
-      <div class="card card-body bg-light" >
+      <div class="card card-body bg-light"  style="background-color: #9da2a773;">
       	
-      		<span style="float:right;">
+          <span style="float:right;">
+            <h4 style="display:inline; color: white">Reviews</h4>
       			<a href="/campground/<%= camp._id %>/comment/new" class="btn btn-outline-success btn-sm float-right" style="width:10rem; ">Add New Review</a>
       		</span>
-	         <hr>
+	         <hr style="border-top: 1px solid rgba(195, 189, 189, 0.25)">
 	          <% camp.comments.forEach(function(comment){ %>
 	            <div class="row" style="padding-bottom:1em">
 	              <div class="col-md-12">
-	                <b style="padding-right:2.5px"><%=comment.author.name%></b>
+	                <b style="padding-right:2.5px; color: white;"><%=comment.author.name%></b>
                   <%- '<span class="fa fa-star checked"></span>'.repeat(comment.review) %><%- '<span class="fa fa-star"></span>'.repeat(5 - comment.review) %>
-	                <span style="float: right;"><%= moment(comment.createdAt).fromNow() %></span>
+	                <span style="float: right; color: white""><%= moment(comment.createdAt).fromNow() %></span>
                   
-	                <div style="padding-top:3px;"><%= comment.content %>
+	                <div style="padding-top:3px; color: white""><%= comment.content %>
                     <% if(currentUser && comment.author.id.equals(currentUser._id)){%>
                       <div style="float:right;">
-                        <a class="btn btn-warning btn-sm" href="/campground/<%=camp._id%>/comment/<%=comment._id%>/edit" style="color:white; padding: .01rem .5rem;">Edit</a>
+                        <a class="btn btn-outline-warning btn-sm" href="/campground/<%=camp._id%>/comment/<%=comment._id%>/edit" style=" padding: .01rem .5rem;">Edit</a>
                         <form action="/campground/<%=camp._id%>/comment/<%=comment._id%>?_method=DELETE" method="POST" style="display:inline;">
-                          <button class="btn btn-danger btn-sm" style="color:white; padding: .01rem .5rem;">Delete</button>
+                          <button class="btn btn-outline-danger btn-sm" style=" padding: .01rem .5rem;">Delete</button>
                         </form>
                       </div>
                     <% } %>
@@ -75,14 +79,14 @@
     </div>
   </div>
 </div>
-
+  
 <script>
   function initMap() {
     var lat = <%= camp.lat %>;
     var lng = <%= camp.lng %>;
     var center = {lat: lat, lng: lng };
     var map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 8,
+        zoom: 15,
         center: center,
         scrollwheel: false
     });

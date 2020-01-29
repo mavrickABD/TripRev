@@ -1,30 +1,30 @@
 <% include ../partials/header.ejs %>
 <div class="container" style="text-align:center;">
-	<h2 >Create New Campgrounds</h2>
+	<h2 class="white-text">Edit <%=camp.name%></h2>
 	<form action="/campground/<%=camp._id%>?_method=put" method="post" style="width:30%; margin:25px auto;">
 		<div class="form-group" >
-		<label class="lb">Name</label>
+			<label class="lb white-text">Name</label>
 	    <input type="text" name="camp[name]" class="form-control" value="<%=camp.name%>" required>
-	  	</div>
+	  </div>
 
 	  	<div class="form-group">
-	  	<label class="lb">Image path</label>
+	  	<label class="lb white-text">Image path</label>
 	    <input type="text" name="camp[image]" class="form-control" value="<%=camp.image%>" required >
 	  	</div>
 
 	  	<div class="form-group">
-	  	<label class="lb">Price</label>
+	  	<label class="lb white-text">Price</label>
 	    <input type="number" name="camp[price]" class="form-control" value="<%=camp.price%>" min="100" step="5" required >
 	  	</div>
 
 	  	<div class="form-group">
-	  	<label class="lb">Description</label>
-	    <input type="text" name="camp[description]" class="form-control" value="<%=camp.description%>" required >
+	  	<label class="lb white-text">Description</label>
+	    <textarea name="camp[description]" class="form-control"  required ><%=camp.description%></textarea>
 	  	</div>
 
 	  	<div class="form-group">
-    	<label for="location" class="lb">Location</label>
-    	<input class="form-control" type="text" name="location" id="location" value="<%= camp.location %>">
+    	<label  class="lb white-text">Location</label>
+    	<input class="form-control" type="text" name="location"  value="<%= camp.location %>">
 		</div>
 
 	  	<div class="form-group">
